@@ -9,9 +9,7 @@ type AppProps = {
 
 type Bubble = {x: number; y: number}
 
-type AppState = {data: Array<Bubble>}
-
-class App extends PureComponent<AppProps, AppState> {
+class App extends PureComponent<AppProps> {
   svgEl: HTMLDivElement | null
   constructor(props: AppProps) {
     super(props)
@@ -24,7 +22,6 @@ class App extends PureComponent<AppProps, AppState> {
       .forceSimulation()
       .nodes(NodePaths.nodes)
       .force('charge_force', d3.forceManyBody())
-      .force('center_force', d3.forceCenter(width / 2, height / 2))
 
     const svg = d3
       .select(this.svgEl)
