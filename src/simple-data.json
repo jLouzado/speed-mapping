@@ -2,7 +2,9 @@
   "nodes": [
     {
       "name": "Travis",
-      "sex": "M"
+      "sex": "M",
+      "fx": 250,
+      "fy": 20
     },
     {
       "name": "Rake",
