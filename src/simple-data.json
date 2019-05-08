@@ -1,0 +1,54 @@
+{
+  "nodes": [
+    {
+      "name": "Travis",
+      "sex": "M"
+    },
+    {
+      "name": "Rake",
+      "sex": "M"
+    },
+    {
+      "name": "Diana",
+      "sex": "F"
+    },
+    {
+      "name": "Rachel",
+      "sex": "F"
+    },
+    {
+      "name": "Shawn",
+      "sex": "M"
+    },
+    {
+      "name": "Emerald",
+      "sex": "F"
+    }
+  ],
+  "links": [
+    {
+      "source": "Travis",
+      "target": "Rake"
+    },
+    {
+      "source": "Diana",
+      "target": "Rake"
+    },
+    {
+      "source": "Diana",
+      "target": "Rachel"
+    },
+    {
+      "source": "Rachel",
+      "target": "Rake"
+    },
+    {
+      "source": "Rachel",
+      "target": "Shawn"
+    },
+    {
+      "source": "Emerald",
+      "target": "Rachel"
+    }
+  ]
+}

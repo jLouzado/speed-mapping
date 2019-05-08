@@ -1,106 +1,79 @@
 import React, {PureComponent} from 'react'
 import * as d3 from 'd3'
-import './App.css'
-
-function getData() {
-  let numItems = 20 + Math.floor(20 * Math.random())
-  let data = []
-  for (let i = 0; i < numItems; i++) {
-    data.push({
-      x: Math.random(),
-      y: Math.random(),
-      r: Math.random(),
-      colour: i % 5
-    })
-  }
-  return data
-}
-
-const colours = ['#2176ae', '#57b8ff', '#b66d0d', '#fbb13c', '#fe6847']
+import * as NodePaths from './simple-data.json'
 
 type AppProps = {
   height: number
   width: number
 }
 
-type Bubble = {x: number; y: number; r: number; colour: number}
+type Bubble = {x: number; y: number}
 
 type AppState = {data: Array<Bubble>}
 
 class App extends PureComponent<AppProps, AppState> {
-  svgEl: SVGSVGElement | null
+  svgEl: HTMLDivElement | null
   constructor(props: AppProps) {
     super(props)
     this.svgEl = null
-    this.state = {
-      data: getData()
-    }
-    this.handleClick = this.handleClick.bind(this)
-  }
-
-  handleClick() {
-    this.setState({
-      data: getData()
-    })
   }
 
   componentDidMount() {
-    this.updateChart()
-  }
+    const {width, height} = this.props
+    const simulation = d3
+      .forceSimulation()
+      .nodes(NodePaths.nodes)
+      .force('charge_force', d3.forceManyBody())
+      .force('center_force', d3.forceCenter(width / 2, height / 2))
 
-  componentDidUpdate() {
-    this.updateChart()
-  }
-
-  updateChart() {
-    if (this.svgEl === null) return null
-    const maxRadius = 40
-    const xScale = d3
-      .scaleLinear()
-      .domain([0, 1])
-      .range([0, this.props.width])
-    const yScale = d3
-      .scaleLinear()
-      .domain([0, 1])
-      .range([0, this.props.height])
-    const rScale = d3
-      .scaleLinear()
-      .domain([0, 1])
-      .range([0, maxRadius])
-
-    const u = d3
+    const svg = d3
       .select(this.svgEl)
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height)
+
+    const node = svg
+      .append('g')
+      .attr('class', 'nodes')
       .selectAll('circle')
-      .data(this.state.data)
-
-    u.enter()
+      .data(NodePaths.nodes as any)
+      .enter()
       .append('circle')
-      .attr('cx', 0.5 * this.props.width)
-      .attr('cy', 0.5 * this.props.height)
-      .style('fill', '#fff')
-      .merge(u as any)
-      .transition()
-      .duration(1000)
-      .attr('cx', (d: Bubble) => xScale(d.x))
-      .attr('cy', (d: Bubble) => yScale(d.y))
-      .attr('r', (d: Bubble) => rScale(d.r))
-      .style('fill', (d: Bubble) => colours[d.colour])
+      .attr('r', 5)
+      .attr('fill', 'red')
 
-    u.exit().remove()
+    const link = svg
+      .append('g')
+      .attr('class', 'links')
+      .selectAll('line')
+      .data(NodePaths.links)
+      .enter()
+      .append('line')
+      .style('stroke', '#999')
+      .style('stroke-width', 2)
+
+    const link_force = d3.forceLink(NodePaths.links).id((d: any) => d.name)
+
+    simulation.force('links', link_force)
+
+    simulation.on('tick', () => {
+      node.attr('cx', (d: any) => d.x).attr('cy', (d: any) => d.y)
+
+      link
+        .attr('x1', (d: any) => d.source.x)
+        .attr('y1', (d: any) => d.source.y)
+        .attr('x2', (d: any) => d.target.x)
+        .attr('y2', (d: any) => d.target.y)
+    })
   }
 
   render() {
+    const {height, width} = this.props
     return (
-      <div className="App">
-        <svg
-          width={this.props.width}
-          height={this.props.height}
-          ref={el => (this.svgEl = el)}
-        />
-        <div>
-          <button onClick={this.handleClick}>Update</button>
-        </div>
-      </div>
+      <div
+        style={{width, height, border: '1px solid #bada55'}}
+        ref={el => (this.svgEl = el)}
+      />
     )
   }
 }

@@ -5,7 +5,7 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(
-  <App height={800} width={600} />,
+  <App height={500} width={500} />,
   document.getElementById('root')
 )
 
