@@ -20,15 +20,6 @@ class App extends PureComponent<AppProps> {
 
   componentDidMount() {
     const {width, height} = this.props
-    const simulation = d3
-      .forceSimulation()
-      .nodes(NodePaths.nodes)
-      .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('charge_force', d3.forceManyBody().strength(-10))
-
-    const link_force = d3.forceLink(NodePaths.links).id((d: any) => d.name)
-
-    simulation.force('links', link_force)
 
     const svg = d3
       .select(this.svgEl)
@@ -66,6 +57,15 @@ class App extends PureComponent<AppProps> {
       .attr('x', 6)
       .attr('y', 3)
 
+    const simulation = d3
+      .forceSimulation()
+      .nodes(NodePaths.nodes)
+      .force('center', d3.forceCenter(width / 2, height / 2))
+      .force('charge_force', d3.forceManyBody().strength(-10))
+
+    const link_force = d3.forceLink(NodePaths.links).id((d: any) => d.name)
+
+    simulation.force('links', link_force)
     simulation.on('tick', () => {
       const alpha = simulation.alpha()
       const k = 50 * alpha
