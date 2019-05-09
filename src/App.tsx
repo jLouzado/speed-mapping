@@ -21,13 +21,11 @@ class App extends PureComponent<AppProps> {
     const simulation = d3
       .forceSimulation()
       .nodes(NodePaths.nodes)
-      .force('charge_force', d3.forceManyBody().strength(-80))
-      .force('gravity', d3.forceY(250))
+      .force('center', d3.forceCenter(width / 2, height / 2))
+      .force('charge_force', d3.forceManyBody().strength(-90))
+      .force('gravity', d3.forceY(50))
 
-    const link_force = d3
-      .forceLink(NodePaths.links)
-      .id((d: any) => d.name)
-      .distance(() => 50)
+    const link_force = d3.forceLink(NodePaths.links).id((d: any) => d.name)
 
     simulation.force('links', link_force)
 
@@ -69,9 +67,14 @@ class App extends PureComponent<AppProps> {
       .style('stroke-width', 2)
 
     simulation.on('tick', () => {
+      const k = 50 * simulation.alpha()
       node.attr('transform', (d: any) => 'translate(' + d.x + ',' + d.y + ')')
 
       link
+        .each((d: any) => {
+          d.source.y -= k / 2
+          d.target.y += k
+        })
         .attr('x1', (d: any) => d.source.x)
         .attr('y1', (d: any) => d.source.y)
         .attr('x2', (d: any) => d.target.x)
