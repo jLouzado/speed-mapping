@@ -21,7 +21,15 @@ class App extends PureComponent<AppProps> {
     const simulation = d3
       .forceSimulation()
       .nodes(NodePaths.nodes)
-      .force('charge_force', d3.forceManyBody())
+      .force('charge_force', d3.forceManyBody().strength(-80))
+      .force('gravity', d3.forceY(250))
+
+    const link_force = d3
+      .forceLink(NodePaths.links)
+      .id((d: any) => d.name)
+      .distance(() => 50)
+
+    simulation.force('links', link_force)
 
     const svg = d3
       .select(this.svgEl)
@@ -48,10 +56,6 @@ class App extends PureComponent<AppProps> {
       .append('line')
       .style('stroke', '#999')
       .style('stroke-width', 2)
-
-    const link_force = d3.forceLink(NodePaths.links).id((d: any) => d.name)
-
-    simulation.force('links', link_force)
 
     simulation.on('tick', () => {
       node.attr('cx', (d: any) => d.x).attr('cy', (d: any) => d.y)
