@@ -60,15 +60,16 @@ class App extends PureComponent<AppProps> {
     const simulation = d3
       .forceSimulation()
       .nodes(NodePaths.nodes)
-      .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('charge_force', d3.forceManyBody().strength(-10))
+      .force(
+        'links',
+        d3
+          .forceLink(NodePaths.links)
+          .id((d: any) => d.name)
+          .distance(60)
+      )
 
-    const link_force = d3.forceLink(NodePaths.links).id((d: any) => d.name)
-
-    simulation.force('links', link_force)
     simulation.on('tick', () => {
       const alpha = simulation.alpha()
-      const k = 50 * alpha
       node.attr('transform', (d: any) => 'translate(' + d.x + ',' + d.y + ')')
       // Drift each node horizontally to it's maturity
       node.each((d: any) => {
@@ -78,25 +79,12 @@ class App extends PureComponent<AppProps> {
         }
       })
 
-      const sources: {
-        [key: string]: boolean
-      } = {}
-
-      const targets: {
-        [key: string]: boolean
-      } = {}
-
+      const k = 25 * alpha
       link
         // Use each link to drift each node vertically
         .each((d: any) => {
-          if (!sources[d.source.name]) {
-            d.source.y -= k
-            sources[d.source.name] = true
-          }
-          if (!targets[d.target.name]) {
-            d.target.y += k * 3
-            targets[d.target.name] = true
-          }
+          d.source.y -= k
+          d.target.y += k * 2
         })
         .attr('x1', (d: any) => d.source.x)
         .attr('y1', (d: any) => d.source.y)
