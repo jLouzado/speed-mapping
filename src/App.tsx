@@ -7,7 +7,9 @@ type AppProps = {
   width: number
 }
 
-type Bubble = {x: number; y: number}
+type Circle = {name: string; fx?: number; fy?: number; maturity?: number}
+
+type Link = {source: string; target: string}
 
 class App extends PureComponent<AppProps> {
   svgEl: HTMLDivElement | null
@@ -39,7 +41,7 @@ class App extends PureComponent<AppProps> {
       .append('g')
       .attr('class', 'nodes')
       .selectAll('g')
-      .data(NodePaths.nodes as any)
+      .data<Circle>(NodePaths.nodes)
       .enter()
       .append('g')
 
@@ -60,15 +62,22 @@ class App extends PureComponent<AppProps> {
       .append('g')
       .attr('class', 'links')
       .selectAll('line')
-      .data(NodePaths.links)
+      .data<Link>(NodePaths.links)
       .enter()
       .append('line')
       .style('stroke', '#999')
       .style('stroke-width', 2)
 
     simulation.on('tick', () => {
-      const k = 50 * simulation.alpha()
+      const alpha = simulation.alpha()
+      const k = 50 * alpha
       node.attr('transform', (d: any) => 'translate(' + d.x + ',' + d.y + ')')
+      node.each((d: any) => {
+        if (d.maturity) {
+          const next = d.x + (width * (d.maturity / 100) - d.x) * alpha
+          d.x = next
+        }
+      })
 
       link
         .each((d: any) => {
