@@ -1,56 +1,50 @@
 {
   "nodes": [
     {
-      "name": "Travis",
-      "sex": "M",
+      "name": "user",
       "fx": 250,
       "fy": 20
     },
     {
-      "name": "Rake",
-      "sex": "M"
+      "name": "needs"
     },
     {
-      "name": "Diana",
-      "sex": "F"
+      "name": "d11-app"
     },
     {
-      "name": "Rachel",
-      "sex": "F"
+      "name": "build-right-thing"
     },
     {
-      "name": "Shawn",
-      "sex": "M"
+      "name": "product-quality"
     },
     {
-      "name": "Emerald",
-      "sex": "F"
+      "name": "execution-speed"
     }
   ],
   "links": [
     {
-      "source": "Travis",
-      "target": "Rake"
+      "source": "user",
+      "target": "needs"
     },
     {
-      "source": "Diana",
-      "target": "Rake"
+      "source": "d11-app",
+      "target": "needs"
     },
     {
-      "source": "Diana",
-      "target": "Rachel"
+      "source": "d11-app",
+      "target": "build-right-thing"
     },
     {
-      "source": "Rachel",
-      "target": "Rake"
+      "source": "build-right-thing",
+      "target": "needs"
     },
     {
-      "source": "Rachel",
-      "target": "Shawn"
+      "source": "build-right-thing",
+      "target": "product-quality"
     },
     {
-      "source": "Emerald",
-      "target": "Rachel"
+      "source": "execution-speed",
+      "target": "build-right-thing"
     }
   ]
 }

@@ -40,12 +40,23 @@ class App extends PureComponent<AppProps> {
     const node = svg
       .append('g')
       .attr('class', 'nodes')
-      .selectAll('circle')
+      .selectAll('g')
       .data(NodePaths.nodes as any)
       .enter()
+      .append('g')
+
+    // Circles
+    node
       .append('circle')
       .attr('r', 5)
       .attr('fill', 'red')
+
+    // Labels
+    node
+      .append('text')
+      .text((d: any) => d.name)
+      .attr('x', 6)
+      .attr('y', 3)
 
     const link = svg
       .append('g')
@@ -58,7 +69,7 @@ class App extends PureComponent<AppProps> {
       .style('stroke-width', 2)
 
     simulation.on('tick', () => {
-      node.attr('cx', (d: any) => d.x).attr('cy', (d: any) => d.y)
+      node.attr('transform', (d: any) => 'translate(' + d.x + ',' + d.y + ')')
 
       link
         .attr('x1', (d: any) => d.source.x)
