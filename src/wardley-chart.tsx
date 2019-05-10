@@ -46,7 +46,7 @@ class WardleyChart extends PureComponent<AppProps> {
         }
       })
 
-      const k = 25 * alpha
+      const k = 18 * alpha
       link
         // Use each link to drift each node vertically
         .each((d: any) => {
@@ -124,6 +124,11 @@ class Nodes extends React.PureComponent<NodeProps> {
       .attr('class', 'component')
       .attr('id', (d: any) => d.name)
       .on('click', (target: any) => {
+        // Redraw the clicked node on top
+        d3.select(`#${target.name}`)
+          .raise()
+          .classed('active', true)
+        // Highlight connected links
         d3.select('.links')
           .selectAll('line')
           .style('stroke', (link: any) =>
