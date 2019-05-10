@@ -104,7 +104,7 @@ class App extends PureComponent<AppProps> {
 
     return (
       <div style={{width, height, border: '1px solid #bada55'}}>
-        <svg ref={el => (this.svgEl = el)}>
+        <svg ref={el => (this.svgEl = el)} fontFamily="Fira Sans">
           <g id="grid">
             <g
               id="value chain"
