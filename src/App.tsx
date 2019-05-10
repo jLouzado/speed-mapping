@@ -95,24 +95,46 @@ class App extends PureComponent<AppProps> {
 
   render() {
     const {height, width} = this.props
-    const mapHeight = height - 20
-    const mapWidth = width - 20
+    const bottomPad = 80
+    const mapHeight = height - bottomPad
+    const leftPad = 25
+    const mapWidth = width - leftPad
     var custMark = mapWidth / 4
-    var prodMark = mapWidth / 2
-    var commMark = (mapWidth / 4) * 3
+    var prodMark = custMark * 2
+    var commMark = custMark * 3
     var visMark = mapHeight / 2
 
     return (
-      <div style={{width, height, border: '1px solid #bada55'}}>
+      <div style={{width, height}}>
         <svg ref={el => (this.svgEl = el)} fontFamily="Fira Sans">
           <g id="grid">
             <g
               id="value chain"
               transform={`translate(0,${mapHeight}) rotate(270)`}
             >
-              <line x1="0" y1="0" x2={mapHeight} y2="0" stroke="black" />
               <line
-                x1="-2em"
+                x1="-3em"
+                y1={leftPad}
+                x2={mapHeight}
+                y2={leftPad}
+                stroke="black"
+              />
+              <text x="10" y="1.25em" textAnchor="start">
+                Invisible
+              </text>
+              <text
+                x={visMark}
+                y="1.25em"
+                textAnchor="middle"
+                fontWeight="bold"
+              >
+                Value Chain
+              </text>
+              <text x={mapHeight - 10} y="1.25em" textAnchor="end">
+                Visible
+              </text>
+              <line
+                x1="-3em"
                 y1={custMark}
                 x2={mapHeight}
                 y2={custMark}
@@ -120,60 +142,66 @@ class App extends PureComponent<AppProps> {
                 strokeDasharray="5,5"
               />
               <line
-                x1="-2em"
-                y1={prodMark}
-                x2={mapHeight}
-                y2={prodMark}
-                stroke="black"
-                strokeDasharray="5,5"
-              />
-              <line
-                x1="-2em"
+                x1="-3em"
                 y1={commMark}
                 x2={mapHeight}
                 y2={commMark}
                 stroke="black"
                 strokeDasharray="5,5"
               />
-              <text x="0" y="-0.2em" textAnchor="start">
-                Invisible
-              </text>
-              <text
-                x={visMark}
-                y="-0.2em"
-                textAnchor="middle"
-                fontWeight="bold"
-              >
-                Value Chain
-              </text>
-              <text x={mapHeight} y="-0.2em" textAnchor="end">
-                Visible
-              </text>
+              <line
+                x1="-3em"
+                y1={prodMark}
+                x2={mapHeight}
+                y2={prodMark}
+                stroke="black"
+                strokeDasharray="5,5"
+              />
             </g>
             <g id="Evolution" transform={`translate(0,${mapHeight})`}>
               <line x1="0" y1="0" x2={mapHeight} y2="0" stroke="black" />
-              <text x="0" y="1em" textAnchor="start">
+              <text x={(leftPad + custMark) / 2} y="1em" textAnchor="middle">
                 Genesis
               </text>
-              <text x={custMark} y="1em" textAnchor="start">
+              <text x={(leftPad + custMark) / 2} y="2em" textAnchor="middle">
+                &nbsp;(+ novel)
+              </text>
+              <text x={(leftPad + custMark) / 2} y="3em" textAnchor="middle">
+                &nbsp;(+ unpredictable)
+              </text>
+              <text x={(custMark + prodMark) / 2} y="1em" textAnchor="middle">
                 &nbsp;Custom
               </text>
-              <text x={custMark} y="2em" textAnchor="start">
-                &nbsp;built
+              <text x={(custMark + prodMark) / 2} y="2em" textAnchor="middle">
+                &nbsp;(+ emerging)
               </text>
-              <text x={prodMark} y="1em" textAnchor="start">
+              <text x={(custMark + prodMark) / 2} y="3em" textAnchor="middle">
+                &nbsp;(+ understanding growing)
+              </text>
+              <text x={(prodMark + commMark) / 2} y="1em" textAnchor="middle">
                 &nbsp;Product
               </text>
-              <text x={prodMark} y="2em" textAnchor="start">
-                &nbsp;(+ rental)
+              <text x={(prodMark + commMark) / 2} y="2em" textAnchor="middle">
+                &nbsp;(+ good)
               </text>
-              <text x={commMark} y="1em" textAnchor="start">
-                &nbsp;Commodity
+              <text x={(prodMark + commMark) / 2} y="3em" textAnchor="middle">
+                &nbsp;(+ education growing)
               </text>
-              <text x={commMark} y="2em" textAnchor="start">
-                &nbsp;(+ utility)
+              <text x={(commMark + mapWidth) / 2} y="1em" textAnchor="middle">
+                &nbsp;Utility
               </text>
-              <text x={mapHeight} y="1.5em" textAnchor="end" fontWeight="bold">
+              <text x={(commMark + mapWidth) / 2} y="2em" textAnchor="middle">
+                &nbsp;(+ best)
+              </text>
+              <text x={(commMark + mapWidth) / 2} y="3em" textAnchor="middle">
+                &nbsp;(+ well defined / measurable)
+              </text>
+              <text
+                x={mapWidth / 2}
+                y="4.5em"
+                textAnchor="middle"
+                fontWeight="bold"
+              >
                 Evolution
               </text>
             </g>
