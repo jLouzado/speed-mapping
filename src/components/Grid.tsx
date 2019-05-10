@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {Fragment} from 'react'
+import {circleTypes} from './Nodes'
 
 export const Grid = (props: {width: number; height: number}) => {
   const {width, height} = props
@@ -11,6 +12,29 @@ export const Grid = (props: {width: number; height: number}) => {
   const markCommodity = markCustom * 3
   return (
     <g id="grid">
+      <g id="legend">
+        <text x={3.5 * leftPad} y="2em" textAnchor="middle" fontWeight="bold">
+          Legend
+        </text>
+        {Object.keys(circleTypes).map((key: string, i: number) => {
+          const {r, width, stroke, fill} = circleTypes[key]
+          return (
+            <Fragment>
+              <circle
+                cx={2.5 * leftPad}
+                cy={`${3 + i}em`}
+                fill={fill}
+                stroke={stroke}
+                r={r}
+                strokeWidth={width}
+              />
+              <text x={4.5 * leftPad} y={`${3 + i}em`} textAnchor="start">
+                {key}
+              </text>
+            </Fragment>
+          )
+        })}
+      </g>
       <g id="value chain" transform={`translate(0,${mapHeight}) rotate(270)`}>
         <line
           x1="-3em"

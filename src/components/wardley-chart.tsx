@@ -11,7 +11,14 @@ type AppProps = {
   width: number
 }
 
-export type Circle = {name: string; fx?: number; fy?: number; maturity?: number}
+export type Circle = {
+  name: string
+  type: 'component' | 'process' | 'attribute' | 'user'
+  root?: boolean
+  fx?: number
+  fy?: number
+  maturity?: number
+}
 
 export type Link = {source: string; target: string}
 
@@ -23,7 +30,7 @@ class WardleyChart extends PureComponent<AppProps> {
     this.svgEl = null
     this.simulation = d3
       .forceSimulation<Circle>()
-      .nodes(NodePaths.nodes)
+      .nodes(NodePaths.nodes as Circle[])
       .force(
         'links',
         d3
@@ -37,7 +44,7 @@ class WardleyChart extends PureComponent<AppProps> {
     const {width} = this.props
     const node = d3.select('.nodes').selectAll('.component')
     const link = d3.select('.links').selectAll('line')
-    this.simulation.nodes(NodePaths.nodes).on('tick', () => {
+    this.simulation.nodes(NodePaths.nodes as Circle[]).on('tick', () => {
       if (this.simulation === null) return
       const alpha = this.simulation.alpha()
       node.attr('transform', (d: any) => 'translate(' + d.x + ',' + d.y + ')')
@@ -80,7 +87,10 @@ class WardleyChart extends PureComponent<AppProps> {
         >
           <Grid width={width} height={height} />
           <Links data={NodePaths.links} />
-          <Nodes data={NodePaths.nodes} simulation={this.simulation} />
+          <Nodes
+            data={NodePaths.nodes as Circle[]}
+            simulation={this.simulation}
+          />
         </svg>
       </div>
     )

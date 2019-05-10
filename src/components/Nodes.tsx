@@ -2,10 +2,46 @@ import React from 'react'
 import * as d3 from 'd3'
 import {Simulation} from 'd3'
 import {Circle, Link} from './wardley-chart'
+
 export type NodeProps = {
   data: Circle[]
   simulation: Simulation<Circle, Link>
 }
+
+export type CircleDescription = {
+  stroke: string
+  width: number
+  r: number
+  fill: string
+}
+
+export const circleTypes: {[key: string]: CircleDescription} = {
+  component: {
+    r: 5,
+    width: 0,
+    stroke: '',
+    fill: 'red'
+  },
+  attribute: {
+    r: 5,
+    width: 2,
+    stroke: '#2c3e50',
+    fill: '#ecf0f1'
+  },
+  process: {
+    r: 5,
+    width: 2,
+    stroke: '#34495e',
+    fill: '#f1c40f'
+  },
+  user: {
+    r: 7,
+    width: 1,
+    stroke: 'black',
+    fill: '#bdc3c7'
+  }
+}
+
 export class Nodes extends React.PureComponent<NodeProps> {
   ref: SVGGElement | null = null
   componentDidMount() {
@@ -39,11 +75,14 @@ export class Nodes extends React.PureComponent<NodeProps> {
               : 0.8
           )
       })
+
     // Circles
     nodes
       .append('circle')
-      .attr('r', 5)
-      .attr('fill', 'red')
+      .attr('r', (d: any) => circleTypes[d.type].r)
+      .attr('fill', (d: any) => circleTypes[d.type].fill)
+      .attr('stroke', (d: any) => circleTypes[d.type].stroke)
+      .attr('stroke-width', (d: any) => circleTypes[d.type].width)
     // Labels
     const yPositions = [-3, 3, 12]
     nodes
