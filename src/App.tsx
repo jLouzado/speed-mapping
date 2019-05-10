@@ -2,40 +2,42 @@ import * as React from 'react'
 import WardleyChart from './wardley-chart'
 import {debounce} from 'typedash'
 
-export default class App extends React.Component<
-  {},
-  {width: number; height: number}
-> {
+type AppState = {width: number; height: number}
+
+export default class App extends React.Component<{}, AppState> {
   constructor(props: {}) {
     super(props)
-    this.state = {
-      width: 800,
-      height: 1024
-    }
+    this.state = this.updateDimensions()
   }
 
   componentDidMount() {
-    this.updateDimensions()
     window.addEventListener(
       'resize',
-      debounce(this.updateDimensions.bind(this), 200)
+      debounce(this.updateDimensionsInState.bind(this), 200)
     )
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions.bind(this))
+    window.removeEventListener(
+      'resize',
+      this.updateDimensionsInState.bind(this)
+    )
+  }
+
+  updateDimensionsInState() {
+    this.setState(this.updateDimensions())
   }
 
   /**
    * Calculate & Update state of new dimensions
    */
-  updateDimensions() {
+  updateDimensions(): AppState {
     if (window.innerWidth < 500) {
-      this.setState({width: 450, height: 800})
+      return {width: 450, height: 800}
     } else {
       const width = window.innerWidth - 100
       const height = window.innerHeight - 100
-      this.setState({width, height})
+      return {width, height}
     }
   }
 
