@@ -1,5 +1,6 @@
 import * as React from 'react'
 import WardleyChart from './wardley-chart'
+import {debounce} from 'typedash'
 
 export default class App extends React.Component<
   {},
@@ -15,7 +16,10 @@ export default class App extends React.Component<
 
   componentDidMount() {
     this.updateDimensions()
-    window.addEventListener('resize', this.updateDimensions.bind(this))
+    window.addEventListener(
+      'resize',
+      debounce(this.updateDimensions.bind(this), 200)
+    )
   }
 
   componentWillUnmount() {
