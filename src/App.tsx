@@ -1,5 +1,5 @@
 import * as React from 'react'
-import WardleyChart from './wardley-chart'
+import WardleyChart from './components/wardley-chart'
 import {debounce} from 'typedash'
 
 type AppState = {width: number; height: number}
