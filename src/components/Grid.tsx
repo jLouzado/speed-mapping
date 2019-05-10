@@ -97,7 +97,7 @@ export const Grid = (props: {width: number; height: number}) => {
           &nbsp;(+ well defined / measurable)
         </text>
         <text x={mapWidth / 2} y="4.5em" textAnchor="middle" fontWeight="bold">
-          Evolution
+          Evolution / Maturity
         </text>
       </g>
     </g>
