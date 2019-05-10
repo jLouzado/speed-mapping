@@ -43,6 +43,10 @@ class WardleyChart extends PureComponent<AppProps> {
       node.attr('transform', (d: any) => 'translate(' + d.x + ',' + d.y + ')')
       // Drift each node horizontally to it's maturity
       node.each((d: any) => {
+        if (d.root) {
+          d.x = (width - 25) / 2
+          return
+        }
         if (d.maturity) {
           const next = d.x + (width * (d.maturity / 100) - d.x) * alpha
           d.x = next
