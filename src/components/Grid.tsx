@@ -100,7 +100,7 @@ export const Grid = (props: {width: number; height: number}) => {
           &nbsp;(+ emerging)
         </text>
         <text x={(markCustom + markProduct) / 2} y="3em" textAnchor="middle">
-          &nbsp;(+ understanding growing)
+          &nbsp;(+ growing understanding)
         </text>
         <text x={(markProduct + markCommodity) / 2} y="1em" textAnchor="middle">
           &nbsp;Product
@@ -109,7 +109,7 @@ export const Grid = (props: {width: number; height: number}) => {
           &nbsp;(+ good)
         </text>
         <text x={(markProduct + markCommodity) / 2} y="3em" textAnchor="middle">
-          &nbsp;(+ education growing)
+          &nbsp;(+ growing confidence)
         </text>
         <text x={(markCommodity + mapWidth) / 2} y="1em" textAnchor="middle">
           &nbsp;Utility
