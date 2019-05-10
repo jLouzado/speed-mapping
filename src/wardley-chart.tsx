@@ -80,13 +80,6 @@ class WardleyChart extends PureComponent<AppProps> {
   }
 }
 
-function isConnected(
-  link: {source: {name: string}; target: {name: string}},
-  target: {name: string}
-) {
-  return link.source.name === target.name || link.target.name === target.name
-}
-
 class Links extends React.PureComponent<{data: Link[]}> {
   ref: SVGGElement | null = null
 
@@ -132,10 +125,16 @@ class Nodes extends React.PureComponent<NodeProps> {
         d3.select('.links')
           .selectAll('line')
           .style('stroke', (link: any) =>
-            isConnected(link, target) ? '#3498db' : '#bdc3c7'
+            link.source.name === target.name
+              ? '#3498db'
+              : link.target.name === target.name
+              ? '#16a085'
+              : '#bdc3c7'
           )
           .style('stroke-width', (link: any) =>
-            isConnected(link, target) ? 1.5 : 0.8
+            link.source.name === target.name || link.target.name === target.name
+              ? 1.5
+              : 0.8
           )
       })
 
