@@ -59,7 +59,7 @@ export const Grid = (props: {width: number; height: number}) => {
         />
       </g>
       <g id="Evolution" transform={`translate(0,${mapHeight})`}>
-        <line x1="0" y1="0" x2={mapHeight} y2="0" stroke="black" />
+        <line x1="0" y1="0" x2={mapWidth} y2="0" stroke="black" />
         <text x={(leftPad + markCustom) / 2} y="1em" textAnchor="middle">
           Genesis
         </text>
