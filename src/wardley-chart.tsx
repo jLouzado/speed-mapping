@@ -145,11 +145,12 @@ class Nodes extends React.PureComponent<NodeProps> {
       .attr('fill', 'red')
 
     // Labels
+    const yPositions = [-3, 3, 12]
     nodes
       .append('text')
       .text((d: any) => d.name)
       .attr('x', 6)
-      .attr('y', 3)
+      .attr('y', () => yPositions[Math.floor(3 * Math.random())])
   }
 
   render() {
