@@ -35,8 +35,8 @@ export default class App extends React.Component<{}, AppState> {
     if (window.innerWidth < 500) {
       return {width: 450, height: 800}
     } else {
-      const width = window.innerWidth - 100
-      const height = window.innerHeight - 100
+      const width = window.innerWidth
+      const height = window.innerHeight
       return {width, height}
     }
   }
