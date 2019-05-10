@@ -80,6 +80,13 @@ class WardleyChart extends PureComponent<AppProps> {
   }
 }
 
+function isConnected(
+  link: {source: {name: string}; target: {name: string}},
+  target: {name: string}
+) {
+  return link.source.name === target.name || link.target.name === target.name
+}
+
 class Links extends React.PureComponent<{data: Link[]}> {
   ref: SVGGElement | null = null
 
@@ -91,8 +98,8 @@ class Links extends React.PureComponent<{data: Link[]}> {
       .data<Link>(data)
       .enter()
       .append('line')
-      .style('stroke', '#999')
-      .style('stroke-width', 2)
+      .style('stroke', '#7f8c8d')
+      .style('stroke-width', 1)
   }
 
   render() {
@@ -115,6 +122,17 @@ class Nodes extends React.PureComponent<NodeProps> {
       .enter()
       .append('g')
       .attr('class', 'component')
+      .attr('id', (d: any) => d.name)
+      .on('click', (target: any) => {
+        d3.select('.links')
+          .selectAll('line')
+          .style('stroke', (link: any) =>
+            isConnected(link, target) ? '#3498db' : '#bdc3c7'
+          )
+          .style('stroke-width', (link: any) =>
+            isConnected(link, target) ? 1.5 : 0.8
+          )
+      })
 
     // Circles
     nodes
