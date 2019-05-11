@@ -29,6 +29,7 @@ yarn start
 ```
 
 - Check [App.tsx](./App.tsx) for a full list of configurable options and start mapping
+  - They're all passed into the `<WardleyChart />` Component
 - You'll need to set the following things:
   - Source json file, and
   - Scaling factor

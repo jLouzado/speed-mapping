@@ -9,6 +9,7 @@ import {Links} from './Links'
 type AppProps = {
   height: number
   width: number
+  scaling: number
 }
 
 export type Circle = {
@@ -41,7 +42,7 @@ class WardleyChart extends PureComponent<AppProps> {
   }
 
   componentDidMount() {
-    const {width} = this.props
+    const {width, scaling} = this.props
     const node = d3.select('.nodes').selectAll('.component')
     const link = d3.select('.links').selectAll('line')
     this.simulation.nodes(NodePaths.nodes as Circle[]).on('tick', () => {
@@ -60,7 +61,7 @@ class WardleyChart extends PureComponent<AppProps> {
         }
       })
 
-      const k = 5 * alpha
+      const k = scaling * alpha
       link
         // Use each link to drift each node vertically
         .each((d: any) => {
