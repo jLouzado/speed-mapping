@@ -10,9 +10,7 @@ export const Grid = (props: {
   const {width, height, marginBottom, marginLeft} = props
   const mapHeight = height - marginBottom
   const mapWidth = width - marginLeft
-  const markCustom = mapWidth / 4
-  const markProduct = markCustom * 2
-  const markCommodity = markCustom * 3
+  const columnWidth = mapWidth / 4
   const axisOvershoot = 45
   return (
     <g id="grid">
@@ -39,14 +37,47 @@ export const Grid = (props: {
           )
         })}
       </g>
-      <g id="value chain" transform={`translate(0,${mapHeight}) rotate(270)`}>
+      <g id="lines">
         <line
-          x1={-axisOvershoot}
-          y1={marginLeft}
-          x2={mapHeight}
-          y2={marginLeft}
+          x1={marginLeft}
+          y1={-axisOvershoot}
+          x2={marginLeft}
+          y2={mapHeight + axisOvershoot}
           stroke="black"
         />
+        <line
+          x1={marginLeft + columnWidth}
+          y1={-axisOvershoot}
+          x2={marginLeft + columnWidth}
+          y2={mapHeight + axisOvershoot}
+          stroke="black"
+          strokeDasharray="5,5"
+        />
+        <line
+          x1={marginLeft + 2 * columnWidth}
+          y1={-axisOvershoot}
+          x2={marginLeft + 2 * columnWidth}
+          y2={mapHeight + axisOvershoot}
+          stroke="black"
+          strokeDasharray="5,5"
+        />
+        <line
+          x1={marginLeft + 3 * columnWidth}
+          y1={-axisOvershoot}
+          x2={marginLeft + 3 * columnWidth}
+          y2={mapHeight + axisOvershoot}
+          stroke="black"
+          strokeDasharray="5,5"
+        />
+        <line
+          x1={marginLeft - axisOvershoot}
+          y1={mapHeight}
+          x2={width}
+          y2={mapHeight}
+          stroke="black"
+        />
+      </g>
+      <g id="value chain" transform={`translate(0,${mapHeight}) rotate(270)`}>
         <text x="10" y={marginLeft - 5} textAnchor="start">
           Invisible
         </text>
@@ -61,109 +92,42 @@ export const Grid = (props: {
         <text x={mapHeight - 10} y={marginLeft - 5} textAnchor="end">
           Visible
         </text>
-        <line
-          x1={-axisOvershoot}
-          y1={marginLeft + markCustom}
-          x2={mapHeight}
-          y2={marginLeft + markCustom}
-          stroke="black"
-          strokeDasharray="5,5"
-        />
-        <line
-          x1={-axisOvershoot}
-          y1={marginLeft + markCommodity}
-          x2={mapHeight}
-          y2={marginLeft + markCommodity}
-          stroke="black"
-          strokeDasharray="5,5"
-        />
-        <line
-          x1={-axisOvershoot}
-          y1={marginLeft + markProduct}
-          x2={mapHeight}
-          y2={marginLeft + markProduct}
-          stroke="black"
-          strokeDasharray="5,5"
-        />
       </g>
       <g id="Evolution" transform={`translate(0,${mapHeight})`}>
-        <line
-          x1={marginLeft - axisOvershoot}
-          y1="0"
-          x2={width}
-          y2="0"
-          stroke="black"
-        />
-        <text x={marginLeft + markCustom / 2} y="1em" textAnchor="middle">
+        <text x={marginLeft + columnWidth / 2} y="1em" textAnchor="middle">
           Genesis
         </text>
-        <text x={marginLeft + markCustom / 2} y="2em" textAnchor="middle">
+        <text x={marginLeft + columnWidth / 2} y="2em" textAnchor="middle">
           &nbsp;(+ novel)
         </text>
-        <text x={marginLeft + markCustom / 2} y="3em" textAnchor="middle">
+        <text x={marginLeft + columnWidth / 2} y="3em" textAnchor="middle">
           &nbsp;(+ unpredictable)
         </text>
-        <text
-          x={marginLeft + (markCustom + markProduct) / 2}
-          y="1em"
-          textAnchor="middle"
-        >
+        <text x={marginLeft + 1.5 * columnWidth} y="1em" textAnchor="middle">
           &nbsp;Custom
         </text>
-        <text
-          x={marginLeft + (markCustom + markProduct) / 2}
-          y="2em"
-          textAnchor="middle"
-        >
+        <text x={marginLeft + 1.5 * columnWidth} y="2em" textAnchor="middle">
           &nbsp;(+ emerging)
         </text>
-        <text
-          x={marginLeft + (markCustom + markProduct) / 2}
-          y="3em"
-          textAnchor="middle"
-        >
+        <text x={marginLeft + 1.5 * columnWidth} y="3em" textAnchor="middle">
           &nbsp;(+ growing understanding)
         </text>
-        <text
-          x={marginLeft + (markProduct + markCommodity) / 2}
-          y="1em"
-          textAnchor="middle"
-        >
+        <text x={marginLeft + 2.5 * columnWidth} y="1em" textAnchor="middle">
           &nbsp;Product
         </text>
-        <text
-          x={marginLeft + (markProduct + markCommodity) / 2}
-          y="2em"
-          textAnchor="middle"
-        >
+        <text x={marginLeft + 2.5 * columnWidth} y="2em" textAnchor="middle">
           &nbsp;(+ good)
         </text>
-        <text
-          x={marginLeft + (markProduct + markCommodity) / 2}
-          y="3em"
-          textAnchor="middle"
-        >
+        <text x={marginLeft + 2.5 * columnWidth} y="3em" textAnchor="middle">
           &nbsp;(+ growing confidence)
         </text>
-        <text
-          x={marginLeft + (markCommodity + mapWidth) / 2}
-          y="1em"
-          textAnchor="middle"
-        >
+        <text x={marginLeft + 3.5 * columnWidth} y="1em" textAnchor="middle">
           &nbsp;Utility
         </text>
-        <text
-          x={marginLeft + (markCommodity + mapWidth) / 2}
-          y="2em"
-          textAnchor="middle"
-        >
+        <text x={marginLeft + 3.5 * columnWidth} y="2em" textAnchor="middle">
           &nbsp;(+ best)
         </text>
-        <text
-          x={marginLeft + (markCommodity + mapWidth) / 2}
-          y="3em"
-          textAnchor="middle"
-        >
+        <text x={marginLeft + 3.5 * columnWidth} y="3em" textAnchor="middle">
           &nbsp;(+ defined / measurable)
         </text>
         <text x={mapWidth / 2} y="4.5em" textAnchor="middle" fontWeight="bold">
