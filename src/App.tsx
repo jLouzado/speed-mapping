@@ -1,6 +1,7 @@
 import * as React from 'react'
 import WardleyChart from './components/wardley-chart'
 import {debounce} from 'typedash'
+import {NodePaths} from './simple-data'
 
 type AppState = {width: number; height: number}
 
@@ -50,6 +51,7 @@ export default class App extends React.Component<{}, AppState> {
         scaling={5}
         marginLeft={25}
         marginBottom={80}
+        data={NodePaths}
       />
     )
   }

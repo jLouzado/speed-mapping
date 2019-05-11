@@ -31,8 +31,10 @@ yarn start
 - Check [App.tsx](./App.tsx) for a full list of configurable options and start mapping
   - They're all passed into the `<WardleyChart />` Component
 - You'll need to set the following things:
-  - Source json file, and
+  - Create a file and import data
+    - currently it reads from [here](./simple-data.ts)
   - Scaling factor
+    - only needs to be increased once the map gets too clustered
 - Change the scaling factor if you're map is overshooting the bottom.
 
 ## Known Issues

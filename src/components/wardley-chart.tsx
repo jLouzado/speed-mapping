@@ -1,10 +1,14 @@
 import React, {PureComponent} from 'react'
 import * as d3 from 'd3'
-import * as NodePaths from '../simple-data.json'
 import {Simulation} from 'd3'
 import {Grid} from './Grid'
 import {Nodes} from './Nodes'
 import {Links} from './Links'
+
+export type MapData = {
+  nodes: Circle[]
+  links: Link[]
+}
 
 type AppProps = {
   height: number
@@ -12,11 +16,14 @@ type AppProps = {
   scaling: number
   marginLeft: number
   marginBottom: number
+  data: MapData
 }
+
+export type NodeType = 'component' | 'process' | 'attribute' | 'user'
 
 export type Circle = {
   name: string
-  type?: 'component' | 'process' | 'attribute' | 'user'
+  type?: NodeType
   root?: boolean
   fx?: number
   fy?: number
@@ -33,21 +40,21 @@ class WardleyChart extends PureComponent<AppProps> {
     this.svgEl = null
     this.simulation = d3
       .forceSimulation<Circle>()
-      .nodes(NodePaths.nodes as Circle[])
+      .nodes(props.data.nodes)
       .force(
         'links',
         d3
-          .forceLink(NodePaths.links)
+          .forceLink(props.data.links)
           .id((d: any) => d.name)
           .distance(60)
       )
   }
 
   componentDidMount() {
-    const {width, scaling, marginLeft} = this.props
+    const {width, scaling, marginLeft, data} = this.props
     const node = d3.select('.nodes').selectAll('.component')
     const link = d3.select('.links').selectAll('line')
-    this.simulation.nodes(NodePaths.nodes as Circle[]).on('tick', () => {
+    this.simulation.nodes(data.nodes).on('tick', () => {
       if (this.simulation === null) return
       const alpha = this.simulation.alpha()
       node.attr('transform', (d: any) => 'translate(' + d.x + ',' + d.y + ')')
@@ -76,7 +83,7 @@ class WardleyChart extends PureComponent<AppProps> {
   }
 
   render() {
-    const {height, width, marginLeft, marginBottom} = this.props
+    const {height, width, marginLeft, marginBottom, data} = this.props
 
     return (
       <div style={{width, height}}>
@@ -92,11 +99,8 @@ class WardleyChart extends PureComponent<AppProps> {
             marginBottom={marginBottom}
             marginLeft={marginLeft}
           />
-          <Links data={NodePaths.links} />
-          <Nodes
-            data={NodePaths.nodes as Circle[]}
-            simulation={this.simulation}
-          />
+          <Links data={data.links} />
+          <Nodes data={data.nodes} simulation={this.simulation} />
         </svg>
       </div>
     )

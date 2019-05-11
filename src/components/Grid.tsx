@@ -21,7 +21,7 @@ export const Grid = (props: {
         {Object.keys(circleTypes).map((key: string, i: number) => {
           const {r, width, stroke, fill} = circleTypes[key]
           return (
-            <Fragment>
+            <Fragment key={key}>
               <circle
                 cx={marginLeft + 50}
                 cy={`${3 + i}em`}
