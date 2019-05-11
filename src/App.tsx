@@ -43,6 +43,14 @@ export default class App extends React.Component<{}, AppState> {
 
   render() {
     const {width, height} = this.state
-    return <WardleyChart height={height} width={width} scaling={5} />
+    return (
+      <WardleyChart
+        height={height}
+        width={width}
+        scaling={5}
+        marginLeft={25}
+        marginBottom={80}
+      />
+    )
   }
 }

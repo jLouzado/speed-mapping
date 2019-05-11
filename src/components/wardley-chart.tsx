@@ -10,6 +10,8 @@ type AppProps = {
   height: number
   width: number
   scaling: number
+  marginLeft: number
+  marginBottom: number
 }
 
 export type Circle = {
@@ -42,7 +44,7 @@ class WardleyChart extends PureComponent<AppProps> {
   }
 
   componentDidMount() {
-    const {width, scaling} = this.props
+    const {width, scaling, marginLeft} = this.props
     const node = d3.select('.nodes').selectAll('.component')
     const link = d3.select('.links').selectAll('line')
     this.simulation.nodes(NodePaths.nodes as Circle[]).on('tick', () => {
@@ -52,12 +54,10 @@ class WardleyChart extends PureComponent<AppProps> {
       // Drift each node horizontally to it's maturity
       node.each((d: any) => {
         if (d.root) {
-          d.x = (width - 25) / 2
-          return
-        }
-        if (d.maturity) {
-          const next = d.x + (width * (d.maturity / 100) - d.x) * alpha
-          d.x = next
+          d.x = marginLeft + (width - marginLeft) / 2
+          d.y = 50
+        } else if (d.maturity) {
+          d.x = d.x + (width * (d.maturity / 100) - d.x + marginLeft) * alpha
         }
       })
 
@@ -76,7 +76,7 @@ class WardleyChart extends PureComponent<AppProps> {
   }
 
   render() {
-    const {height, width} = this.props
+    const {height, width, marginLeft, marginBottom} = this.props
 
     return (
       <div style={{width, height}}>
@@ -86,7 +86,12 @@ class WardleyChart extends PureComponent<AppProps> {
           ref={el => (this.svgEl = el)}
           fontFamily="Fira Sans"
         >
-          <Grid width={width} height={height} />
+          <Grid
+            width={width}
+            height={height}
+            marginBottom={marginBottom}
+            marginLeft={marginLeft}
+          />
           <Links data={NodePaths.links} />
           <Nodes
             data={NodePaths.nodes as Circle[]}
