@@ -1,44 +1,60 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Speed Mapping
 
-## Available Scripts
+## Purpose
 
-In the project directory, you can run:
+- Creating a Map is Easy, the true test is _Editing_ a Map.
+  - These are most of the [tools](https://medium.com/@benmo/wardley-mapping-tools-and-techniques-76ec1bc47bf9) I've already evaluated.
+- Introducing **Speed Maps** - Mapping, at the speed of conversation.
+- The Project is still in it's infancy, but soon you'll be able to:
+  - Add new Nodes and connect existing ones with ease,
+  - Rename nodes quickly,
+  - Invert Dependencies and many more
 
-### `npm start`
+## Solution
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This Project solves this problem in the following way (for now):
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- Map data stored in JSON as an array of Nodes and an array of Links
+- D3 to Run a Force-Directed simulation of Nodes where `Source` is Higher and `Target` is lower
+  - kind of like this: [Directed Graph with downward-pointing edges](https://ialab.it.monash.edu/webcola/examples/downwardedges.html)
 
-### `npm test`
+## Setup
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Clone the [speed-mapping](https://github.com/jlouzado/speed-mapping) repo
+- run the following:
 
-### `npm run build`
+```
+yarn install
+yarn start
+```
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Check [App.tsx](./App.tsx) for a full list of configurable options and start mapping
+- You'll need to set the following things:
+  - Source json file, and
+  - Scaling factor
+- Change the scaling factor if you're map is overshooting the bottom.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Known Issues
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Currently known issues are listed under [Project-Issues](https://github.com/jlouzado/speed-mapping/issues)
+- Workarounds exist for them as well, refer the issues and comment if you have any continuing feedback
+- Create a new issue if you find anything not Documented
 
-### `npm run eject`
+## Resources for Wardley Mapping
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+If you're just getting started with Wardley Mapping, I'd recommend the following Resources
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [Crossing the River by Feeling the Stones | Simon Wardley](https://vimeo.com/189984496)
+  - Same talk as above, but [15 minute version](https://youtu.be/Ie2KtSU_ndQ)
+- [Mapping Maturity: Create context-specific maturity models... | Chris McDermott](https://medium.com/@chrisvmcd/mapping-maturity-create-context-specific-maturity-models-with-wardley-maps-informed-by-cynefin-37ffcd1d315)
+  - Found this useful as a practical guide
+- [What do Wardley Maps Really map? | Matt Edgar](https://blog.mattedgar.com/2017/08/13/what-do-wardley-maps-really-map-a-settler-writes/)
+  - I don't want to pretend that Wardley Mapping is going to solve all your problems,
+  - This article is a good reminder that `All models are wrong, but sometimes they're useful`
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Developer Resources
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [Wardley Map in D3](http://mbpfefferle.com/2017/01/11/wardley-map-d3)
+- [Force Directed Graph w/ Labels](https://bl.ocks.org/heybignick/3faf257bbbbc7743bb72310d03b86ee8)
+- [3 ways to integrate React and D3](https://frontendcharts.com/react-d3-integrate/)
+- [Integrating React and D3](https://spin.atomicobject.com/2017/07/20/d3-react-typescript/)
