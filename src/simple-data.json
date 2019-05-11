@@ -2,23 +2,31 @@
   "nodes": [
     {
       "name": "user",
-      "fx": 250,
-      "fy": 20
+      "root": true,
+      "type": "user"
     },
     {
-      "name": "needs"
+      "name": "needs",
+      "type": "component",
+      "maturity": 70
     },
     {
-      "name": "d11-app"
+      "name": "d11-app",
+      "maturity": 40
     },
     {
-      "name": "build-right-thing"
+      "name": "build-right-thing",
+      "type": "process",
+      "maturity": 50
     },
     {
-      "name": "product-quality"
+      "name": "product-quality",
+      "type": "attribute",
+      "maturity": 20
     },
     {
-      "name": "execution-speed"
+      "name": "execution-speed",
+      "maturity": 65
     }
   ],
   "links": [
@@ -27,16 +35,16 @@
       "target": "needs"
     },
     {
-      "source": "d11-app",
-      "target": "needs"
+      "source": "needs",
+      "target": "d11-app"
     },
     {
       "source": "d11-app",
       "target": "build-right-thing"
     },
     {
-      "source": "build-right-thing",
-      "target": "needs"
+      "source": "d11-app",
+      "target": "build-right-thing"
     },
     {
       "source": "build-right-thing",

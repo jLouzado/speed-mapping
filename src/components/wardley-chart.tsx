@@ -13,7 +13,7 @@ type AppProps = {
 
 export type Circle = {
   name: string
-  type: 'component' | 'process' | 'attribute' | 'user'
+  type?: 'component' | 'process' | 'attribute' | 'user'
   root?: boolean
   fx?: number
   fy?: number
@@ -60,7 +60,7 @@ class WardleyChart extends PureComponent<AppProps> {
         }
       })
 
-      const k = 18 * alpha
+      const k = 5 * alpha
       link
         // Use each link to drift each node vertically
         .each((d: any) => {
