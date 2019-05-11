@@ -79,10 +79,18 @@ export class Nodes extends React.PureComponent<NodeProps> {
     // Circles
     nodes
       .append('circle')
-      .attr('r', (d: any) => circleTypes[d.type].r)
-      .attr('fill', (d: any) => circleTypes[d.type].fill)
-      .attr('stroke', (d: any) => circleTypes[d.type].stroke)
-      .attr('stroke-width', (d: any) => circleTypes[d.type].width)
+      .attr('r', (d: any) =>
+        d.type ? circleTypes[d.type].r : circleTypes['component'].r
+      )
+      .attr('fill', (d: any) =>
+        d.type ? circleTypes[d.type].fill : circleTypes['component'].fill
+      )
+      .attr('stroke', (d: any) =>
+        d.type ? circleTypes[d.type].stroke : circleTypes['component'].stroke
+      )
+      .attr('stroke-width', (d: any) =>
+        d.type ? circleTypes[d.type].width : circleTypes['component'].width
+      )
     // Labels
     const yPositions = [-3, 3, 12]
     nodes
