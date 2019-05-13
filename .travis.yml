@@ -1,0 +1,27 @@
+language: node_js
+cache:
+  yarn: true
+  directories:
+    - ~/.npm
+notifications:
+  email: false
+node_js:
+  - "stable"
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
+script:
+  - yarn tsc
+  - yarn test
+  if: branch = master
+  - yarn build:docs
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: "./docs"
+  keep_history: true
+  project_name: "speed-mapping"
+  github_token: $GH_TOKEN
+  verbose: true
+  on:
+branch: master

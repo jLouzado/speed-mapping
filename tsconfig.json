@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -19,7 +15,15 @@
     "noEmit": true,
     "jsx": "preserve"
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"],
+  "typedocOptions": {
+    "mode": "file",
+    "out": "docs",
+    "externalPattern": "**/node_modules",
+    "excludeExternals": true,
+    "excludeNotExported": true,
+    "name": "Speed Mapping",
+    "readme": "./README.md",
+    "toc": true
+  }
 }
