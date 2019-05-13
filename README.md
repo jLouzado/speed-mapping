@@ -63,4 +63,4 @@ If you're just getting started with Wardley Mapping, I'd recommend the following
 - [Integrating React and D3](https://spin.atomicobject.com/2017/07/20/d3-react-typescript/)
 - [D3, React and using refs][https://medium.com/@mautayro/d3-react-and-using-refs-e25b9a817a43]
 - [Force Directed Graphs in D3](http://www.puzzlr.org/force-graphs-with-d3/)
--
+- [D3, React & Typescript](https://spin.atomicobject.com/2017/07/20/d3-react-typescript/)
