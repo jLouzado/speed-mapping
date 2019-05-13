@@ -7,9 +7,6 @@ notifications:
   email: false
 node_js:
   - "stable"
-branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
 script:
   - yarn tsc
   - yarn test
@@ -24,4 +21,4 @@ deploy:
   github_token: $GH_TOKEN
   verbose: true
   on:
-branch: master
+    branch: master
