@@ -13,6 +13,7 @@ branches:
 script:
   - yarn tsc
   - yarn test
+  if: branch = master
   - yarn build:docs
 deploy:
   provider: pages
