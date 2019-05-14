@@ -48,9 +48,16 @@ class WardleyChart extends PureComponent<AppProps> {
           .id((d: any) => d.name)
           .distance(60)
       )
+
+    this.runSimulation = this.runSimulation.bind(this)
   }
 
   componentDidMount() {
+    console.log('mounted', this.props.data.nodes.length)
+    this.runSimulation()
+  }
+
+  runSimulation() {
     const {width, scaling, marginLeft, data} = this.props
     const node = d3.select('.nodes').selectAll('.component')
     const link = d3.select('.links').selectAll('line')
