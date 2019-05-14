@@ -42,18 +42,12 @@ export const circleTypes: {[key: string]: CircleDescription} = {
   }
 }
 
-export class Nodes extends React.PureComponent<NodeProps> {
-  ref: SVGGElement | null = null
+class NodeComponent extends React.PureComponent<{node: Circle}> {
+  ref: SVGCircleElement | null = null
+
   componentDidMount() {
-    const {data} = this.props
-    const container = d3.select(this.ref)
-    const nodes = container
-      .selectAll('g')
-      .data<Circle>(data)
-      .enter()
-      .append('g')
-      .attr('class', 'component')
-      .attr('id', (d: any) => d.name)
+    d3.select(this.ref)
+      .data<Circle>([this.props.node])
       .on('click', (target: any) => {
         // Redraw the clicked node on top
         d3.select(`#${target.name}`)
@@ -75,31 +69,42 @@ export class Nodes extends React.PureComponent<NodeProps> {
               : 0.8
           )
       })
-
-    // Circles
-    nodes
-      .append('circle')
-      .attr('r', (d: any) =>
-        d.type ? circleTypes[d.type].r : circleTypes['component'].r
-      )
-      .attr('fill', (d: any) =>
-        d.type ? circleTypes[d.type].fill : circleTypes['component'].fill
-      )
-      .attr('stroke', (d: any) =>
-        d.type ? circleTypes[d.type].stroke : circleTypes['component'].stroke
-      )
-      .attr('stroke-width', (d: any) =>
-        d.type ? circleTypes[d.type].width : circleTypes['component'].width
-      )
-    // Labels
-    const yPositions = [-3, 3, 12]
-    nodes
-      .append('text')
-      .text((d: any) => d.name)
-      .attr('x', 6)
-      .attr('y', () => yPositions[Math.floor(3 * Math.random())])
   }
+
   render() {
-    return <g className="nodes" ref={(ref: SVGGElement) => (this.ref = ref)} />
+    const {
+      node: {type, name}
+    } = this.props
+    const circleType = type ? circleTypes[type] : circleTypes['component']
+    const labelPositions = [-3, 3, 12]
+    return (
+      <g
+        id={name}
+        className="component"
+        ref={(ref: SVGCircleElement) => (this.ref = ref)}
+      >
+        <circle
+          r={circleType.r}
+          fill={circleType.fill}
+          stroke={circleType.stroke}
+          strokeWidth={circleType.width}
+        />
+        <text x={6} y={labelPositions[Math.floor(3 * Math.random())]}>
+          {name}
+        </text>
+      </g>
+    )
+  }
+}
+
+export class Nodes extends React.PureComponent<NodeProps> {
+  render() {
+    return (
+      <g className="nodes">
+        {this.props.data.map((node: Circle, index: number) => (
+          <NodeComponent key={index} node={node} />
+        ))}
+      </g>
+    )
   }
 }
